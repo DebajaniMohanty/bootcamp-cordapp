@@ -35,21 +35,18 @@ public class TokenIssueFlow extends FlowLogic<SignedTransaction> {
         // We get a reference to our own identity.
         Party issuer = getOurIdentity();
 
-        /* ============================================================================
-         *         TODO 1 - Create our TokenState to represent on-ledger tokens!
-         * ===========================================================================*/
-        // We create our new TokenState.
-        TokenState tokenState = null;
 
-        /* ============================================================================
-         *      TODO 3 - Build our token issuance transaction to update the ledger!
-         * ===========================================================================*/
-        // We build our transaction.
-        TransactionBuilder transactionBuilder = null;
+        // We create our new TokenState which is the output state as created for first time.
+        TokenState tokenOutputState = new TokenState(issuer, owner, amount);
+        TokenContract.Issue command = new TokenContract.Issue();
 
-        /* ============================================================================
-         *          TODO 2 - Write our TokenContract to control token issuance!
-         * ===========================================================================*/
+
+        // We build our transaction, assign notary, output state and command.
+        TransactionBuilder transactionBuilder = new TransactionBuilder();
+        transactionBuilder.setNotary(notary);
+        transactionBuilder.addOutputState(tokenOutputState, TokenContract.ID);
+        transactionBuilder.addCommand(command, issuer.getOwningKey());
+
         // We check our transaction is valid based on its contracts.
         transactionBuilder.verify(getServiceHub());
 

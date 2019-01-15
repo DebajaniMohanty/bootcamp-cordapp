@@ -33,6 +33,6 @@ public class HouseState implements ContractState {
 
     public static void main(String[] args) {
         Party debajani = null;
-        HouseState state = new HouseState("11 Mousehold Street, Norwich", debajani);
+        HouseState state = new HouseState("11 Surrey Street, London", debajani);
     }
 }
